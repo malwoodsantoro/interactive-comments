@@ -17,7 +17,7 @@ const ImgAndText = styled.div`
 display: flex;
 `
 
-const Textbox = ({ user }) => {
+const Textbox = ({ user, comment, addComment, addReply, isNewComment, commentId, replyId}) => {
 
   const [text, setText] = useState("");
 
@@ -29,7 +29,7 @@ const Textbox = ({ user }) => {
     <StyledTextbox>
       <ImgAndText>
         <CurrentUserImg>
-          <img src={require(`../images/avatars/image-${user}.webp`)} alt={'Photo of user ${$username}'} />
+          <img src={require(`../images/avatars/image-juliusomo.webp`)} alt={'Photo of user ${$user}'} />
         </CurrentUserImg>
         <textarea
           cols="50" rows="3"
@@ -40,7 +40,8 @@ const Textbox = ({ user }) => {
         />
 
         <div>
-          <button>Send</button>
+          <div>commentid: {commentId} replyid: {replyId}</div>
+          <button onClick={isNewComment ? () => addComment(text) : () => addReply(commentId, replyId, text)}>Send</button>
         </div>
       </ImgAndText>
     </StyledTextbox>

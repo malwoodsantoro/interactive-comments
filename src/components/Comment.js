@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import Textbox from "./Textbox";
 
 const StyledComment = styled.div`
   width: ${({ isReply }) => isReply ? '30rem' : '36rem'};
@@ -42,36 +43,45 @@ const StyledReply = styled.div`
   font-weight: bold;
 `;
 
-const Comment = ({ content, username, currentUser, createdAt, isReply }) => {
+const Comment = ({ content, username, currentUser, current, createdAt, isReply, commentId, addReply, comment, replyId }) => {
 
   const [count, setCounts] = useState(4)
+  const [open, setOpen] = useState(false)
+
+  const replyToComment = () => {
+    setOpen(!open)
+  }
 
   return (
-    <StyledComment isReply={isReply}>
-      <ToggleandContent>
-        <div>
-          <button onClick={() => setCounts(count + 1)}>
-            +
-          </button>
-          <span>{count}</span>
-          <button disabled={count <= 0 && true} onClick={() => setCounts(count - 1)}>
-            -
-          </button>
-        </div>
-        <div>
-          {currentUser && <div>Current user</div>}
-          <Header>
-            <img src={require(`../images/avatars/image-${username}.webp`)} alt={'Photo of user ${$username}'} />
-            <User>{username}</User>
-            <StyledCreatedAt>{createdAt}</StyledCreatedAt>
-            <StyledReply>Reply</StyledReply>
-          </Header>
-          <StyledContent>
-            {content}
-          </StyledContent>
-        </div>
-      </ToggleandContent>
-    </StyledComment>
+    <div>
+      <StyledComment isReply={isReply}>
+        <ToggleandContent>
+          <div>
+            <button onClick={() => setCounts(count + 1)}>
+              +
+            </button>
+            <span>{count}</span>
+            <button disabled={count <= 0 && true} onClick={() => setCounts(count - 1)}>
+              -
+            </button>
+          </div>
+          <div>
+            {currentUser && <div>Current user</div>}
+            <Header>
+              <img src={require(`../images/avatars/image-${username}.webp`)} alt={'Photo of user ${$username}'} />
+              <User>{username}</User>
+              <StyledCreatedAt>{createdAt}</StyledCreatedAt>
+              <StyledReply onClick={replyToComment}>Reply</StyledReply>
+            </Header>
+            <StyledContent>
+              {content}
+              commentId: {commentId}
+            </StyledContent>
+          </div>
+        </ToggleandContent>
+      </StyledComment>
+      {open && <Textbox user={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId}/>}
+    </div>
   )
 }
 
