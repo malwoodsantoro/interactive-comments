@@ -64,7 +64,8 @@ function App() {
       });
       setComments(updatedReplies)
     } else {
-      alert('comment')
+      let updatedComments = comments.filter(comment => !(comment.id === commentId));
+      setComments(updatedComments)
     }
   }
 
