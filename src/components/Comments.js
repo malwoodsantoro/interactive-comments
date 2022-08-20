@@ -43,7 +43,7 @@ const Comments = ({ comments, currentUser }) => {
           )
         })
       }
-      <Textbox currentUser={currentUser}/>
+      <Textbox user={currentUser}/>
     </StyledComments>
   )
 }

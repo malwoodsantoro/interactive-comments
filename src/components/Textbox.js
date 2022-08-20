@@ -17,7 +17,7 @@ const ImgAndText = styled.div`
 display: flex;
 `
 
-const Textbox = ({ currentUser }) => {
+const Textbox = ({ user }) => {
 
   const [text, setText] = useState("");
 
@@ -29,7 +29,7 @@ const Textbox = ({ currentUser }) => {
     <StyledTextbox>
       <ImgAndText>
         <CurrentUserImg>
-          <img src={require(`../images/avatars/image-${currentUser}.webp`)} alt={'Photo of user ${$username}'} />
+          <img src={require(`../images/avatars/image-${user}.webp`)} alt={'Photo of user ${$username}'} />
         </CurrentUserImg>
         <textarea
           cols="50" rows="3"
