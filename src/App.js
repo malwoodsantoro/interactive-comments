@@ -5,7 +5,7 @@ import data from './data.json'
 function App() {
   return (
     <div className="App">
-      <Comments comments={data.comments} />
+      <Comments comments={data.comments} currentUser={data.currentUser.username} />
     </div>
   );
 }
