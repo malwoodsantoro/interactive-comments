@@ -19,22 +19,20 @@ const StyledReply = styled.div`
 const StyledReplies = styled.div`
 
 `
-
-const Comments = ({ comments, currentUser, addComment, addReply}) => {
-
+const Comments = ({ comments, currentUser, addComment, addReply, deleteComment, editComment}) => {
 
   return (
     <StyledComments>
       {
-        comments.map(({ content, user, index, replies, createdAt, id: commentId }) => {
+        comments.map(({ content, user, index, replies, createdAt, id: commentId, score }) => {
           return (
             <div>
-              <Comment key={index} username={user.username} content={content} createdAt={createdAt} isReply={false} commentId={commentId} addReply={addReply} />
+              <Comment key={index} username={user.username} score={score} content={content} createdAt={createdAt} currentUser={(currentUser == user.username) ? true : false} isReply={false} commentId={commentId} addReply={addReply} deleteComment={deleteComment} editComment={editComment}/>
               <StyledReplies>
-              {replies.length > 0 && replies.map(({ index, user, content, createdAt, id: replyId  }) => {
+              {replies.length > 0 && replies.map(({ index, user, content, createdAt, id: replyId, score  }) => {
                 return (
                   <StyledReply>
-                    <Comment key={index} username={user.username} content={content} createdAt={createdAt} currentUser={(currentUser == user.username) ? true : false} current={currentUser} isReply={true} addReply={addReply} commentId={commentId} replyId={replyId} />
+                    <Comment key={index} username={user.username} score={score} content={content} createdAt={createdAt} currentUser={(currentUser == user.username) ? true : false} current={currentUser} isReply={true} addReply={addReply} commentId={commentId} replyId={replyId} deleteComment={deleteComment} editComment={editComment}/>
                   </StyledReply>
                 )
               }
@@ -44,7 +42,7 @@ const Comments = ({ comments, currentUser, addComment, addReply}) => {
           )
         })
       }
-      <Textbox addComment={addComment} user={currentUser} isNewComment={true}/>
+      <Textbox addComment={addComment} user={currentUser} isReply={false}/>
     </StyledComments>
   )
 }

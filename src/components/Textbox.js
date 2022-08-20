@@ -2,7 +2,8 @@ import styled from "styled-components";
 import React, { useState } from 'react';
 
 const StyledTextbox = styled.div`
-  width: 36rem;
+  width: ${({ isReply }) => isReply ? '30rem' : '36rem'};
+  margin-left: ${({ isReply }) => isReply && '10px;'};
   background-color: #fff;
   border-radius: 5px;
   padding: 20px;
@@ -17,7 +18,7 @@ const ImgAndText = styled.div`
 display: flex;
 `
 
-const Textbox = ({ user, comment, addComment, addReply, isNewComment, commentId, replyId}) => {
+const Textbox = ({ user, comment, addComment, addReply, isReply, commentId, replyId}) => {
 
   const [text, setText] = useState("");
 
@@ -26,13 +27,12 @@ const Textbox = ({ user, comment, addComment, addReply, isNewComment, commentId,
   }
 
   return (
-    <StyledTextbox>
+    <StyledTextbox isReply={isReply}>
       <ImgAndText>
         <CurrentUserImg>
           <img src={require(`../images/avatars/image-juliusomo.webp`)} alt={'Photo of user ${$user}'} />
         </CurrentUserImg>
         <textarea
-          cols="50" rows="3"
           type="text"
           value={text}
           placeholder="Add a comment..."
@@ -41,7 +41,7 @@ const Textbox = ({ user, comment, addComment, addReply, isNewComment, commentId,
 
         <div>
           <div>commentid: {commentId} replyid: {replyId}</div>
-          <button onClick={isNewComment ? () => addComment(text) : () => addReply(commentId, replyId, text)}>Send</button>
+          <button onClick={!isReply ? () => addComment(text) : () => addReply(commentId, replyId, text)}>Send</button>
         </div>
       </ImgAndText>
     </StyledTextbox>

@@ -17,6 +17,17 @@ const ToggleandContent = styled.div`
   align-items: center;
 `
 
+const DeleteandEdit = styled.div`
+margin-left: auto;
+`
+
+const Delete = styled.span`
+margin-right: 5px;
+`
+
+const Edit= styled.span`
+`
+
 const StyledContent = styled.div`
   color: #616469;
 `
@@ -43,9 +54,9 @@ const StyledReply = styled.div`
   font-weight: bold;
 `;
 
-const Comment = ({ content, username, currentUser, current, createdAt, isReply, commentId, addReply, comment, replyId }) => {
+const Comment = ({ content, username, currentUser, current, score, createdAt, isReply, commentId, addReply, comment, replyId, deleteComment, editComment }) => {
 
-  const [count, setCounts] = useState(4)
+  const [count, setCounts] = useState(score)
   const [open, setOpen] = useState(false)
 
   const replyToComment = () => {
@@ -66,21 +77,25 @@ const Comment = ({ content, username, currentUser, current, createdAt, isReply, 
             </button>
           </div>
           <div>
-            {currentUser && <div>Current user</div>}
             <Header>
               <img src={require(`../images/avatars/image-${username}.webp`)} alt={'Photo of user ${$username}'} />
               <User>{username}</User>
               <StyledCreatedAt>{createdAt}</StyledCreatedAt>
-              <StyledReply onClick={replyToComment}>Reply</StyledReply>
+              {!currentUser && <StyledReply onClick={replyToComment}>Reply</StyledReply>}
+              {currentUser &&
+                <DeleteandEdit>
+                  <Delete onClick={() => deleteComment(isReply, commentId, replyId)}>Delete</Delete>
+                  <Edit onClick={editComment}>Edit</Edit>
+                </DeleteandEdit>
+              }
             </Header>
             <StyledContent>
               {content}
-              commentId: {commentId}
             </StyledContent>
           </div>
         </ToggleandContent>
       </StyledComment>
-      {open && <Textbox user={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId}/>}
+      {open && <Textbox user={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId} isReply={true} />}
     </div>
   )
 }

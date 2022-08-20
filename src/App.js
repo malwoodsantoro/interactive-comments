@@ -26,7 +26,6 @@ function App() {
   }
 
   const addToReplies = (commentId, text) => {
-
     const testObject = {
       "id": 3,
       "content": text,
@@ -42,25 +41,42 @@ function App() {
       }
     }
 
-    let updatedReplies = comments.map(item => 
-      {
-        if (item.id == commentId){
-          
-          return {...item, replies: [...item.replies, testObject]}; //gets everything that was already in item, and updates "done"
+    let updatedReplies = comments.map(item => {
+      if (item.id == commentId) {
+        return { ...item, replies: [...item.replies, testObject] }; //gets everything that was already in item, and updates "done"
+      }
+      return item; // else return unmodified item 
+    });
+    setComments(updatedReplies)
+  }
+
+  const deleteComment = (isReply, commentId, replyId) => {
+
+    let commentIndex = comments.findIndex(x => x.id === commentId);
+    let replyIndex = comments[commentIndex].replies.findIndex(x => (x.id = replyId));
+
+    if (isReply) {
+      let updatedReplies = comments.map(item => {
+        if (item.id == commentId) {
+          return { ...item, replies: [...item.replies.splice(replyIndex, 1)] }; //gets everything that was already in item, and updates "done"
         }
         return item; // else return unmodified item 
       });
-
       setComments(updatedReplies)
+    } else {
+      alert('comment')
+    }
+  }
 
-
+  const editComment = () => {
+    alert('edit comment')
   }
 
 
 
   return (
     <div className="App">
-      <Comments comments={comments} currentUser={currentUser} addComment={addToComments} addReply={addToReplies} />
+      <Comments comments={comments} currentUser={currentUser} addComment={addToComments} addReply={addToReplies} deleteComment={deleteComment} editComment={editComment} />
     </div>
   );
 }
