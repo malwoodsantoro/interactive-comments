@@ -23,7 +23,7 @@ const ImgAndText = styled.div`
   justify-content: space-between;
 `
 
-const Textbox = ({ user, content, comment, addComment, addReply, isReply, commentId, replyId, editMode }) => {
+const Textbox = ({ user, content, comment, addComment, addReply, editComment,  isReply, commentId, replyId, editMode }) => {
 
   const [text, setText] = useState("");
   const [edit, setEdit] = useState(content)
@@ -58,7 +58,12 @@ const Textbox = ({ user, content, comment, addComment, addReply, isReply, commen
           />
         }
         <div>
-          <button onClick={!isReply ? () => addComment(text) : () => addReply(commentId, replyId, text)}>{editMode ? 'Update': 'Send'} </button>
+          {editMode ?
+          <button onClick={() => editComment(comment, commentId, replyId, text)}>Update</button>
+          :
+          <button onClick={!isReply ? () => addComment(text) : () => addReply(commentId, replyId, text)}>Send</button>
+
+          }
         </div>
       </ImgAndText>
     </StyledTextbox>

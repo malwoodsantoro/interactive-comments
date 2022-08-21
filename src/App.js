@@ -69,7 +69,7 @@ function App() {
     }
   }
 
-  const editComment = (comment, commentId, replyId) => {
+  const editComment = (comment, commentId, replyId, text) => {
     if (!comment) {
       alert('reply!')
     } else {

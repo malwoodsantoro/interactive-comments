@@ -131,7 +131,7 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
           </div>
         </ToggleandContent>
       </StyledComment>
-      {open && <Textbox content={content} editMode={edit} user={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId} isReply={true} />}
+      {open && <Textbox content={content} editMode={edit} user={current} addReply={addReply} editComment={editComment} comment={comment} commentId={commentId} replyId={replyId} isReply={true} />}
     </div>
   )
 }
