@@ -88,13 +88,15 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
 
   const [count, setCounts] = useState(score)
   const [open, setOpen] = useState(false)
+  const [edit, setEdit] = useState(false);
 
   const replyToComment = () => {
     setOpen(!open)
   }
 
-  const edit = () => {
-    setOpen(!open)
+  const editContent = () => {
+    setEdit(true);
+    setOpen(true);
   }
 
   return (
@@ -119,7 +121,7 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
               {currentUser &&
                 <DeleteandEdit>
                   <Delete onClick={() => deletePost(isReply, commentId, replyId)}>Delete</Delete>
-                  <Edit onClick={() => edit(comment, commentId, replyId)}>Edit</Edit>
+                  <Edit onClick={() => editContent(comment, commentId, replyId)}>Edit</Edit>
                 </DeleteandEdit>
               }
             </Header>
@@ -129,7 +131,7 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
           </div>
         </ToggleandContent>
       </StyledComment>
-      {open && <Textbox editContent={content} user={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId} isReply={true} />}
+      {open && <Textbox content={content} editMode={edit} user={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId} isReply={true} />}
     </div>
   )
 }

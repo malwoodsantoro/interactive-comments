@@ -23,10 +23,10 @@ const ImgAndText = styled.div`
   justify-content: space-between;
 `
 
-const Textbox = ({ user, comment, addComment, addReply, isReply, commentId, replyId, editContent }) => {
+const Textbox = ({ user, content, comment, addComment, addReply, isReply, commentId, replyId, editMode }) => {
 
   const [text, setText] = useState("");
-  const [edit, setEdit] = useState(editContent)
+  const [edit, setEdit] = useState(content)
 
   const handleChange = (e) => {
     setText(e.target.value);
@@ -42,7 +42,7 @@ const Textbox = ({ user, comment, addComment, addReply, isReply, commentId, repl
         <CurrentUserImg>
           <img src={require(`../images/avatars/image-juliusomo.webp`)} alt={'Photo of user ${$user}'} />
         </CurrentUserImg>
-        {edit ?
+        {editMode ?
           <textarea
             type="text"
             value={edit}
@@ -57,9 +57,8 @@ const Textbox = ({ user, comment, addComment, addReply, isReply, commentId, repl
             onChange={handleChange}
           />
         }
-
         <div>
-          <button onClick={!isReply ? () => addComment(text) : () => addReply(commentId, replyId, text)}>Send</button>
+          <button onClick={!isReply ? () => addComment(text) : () => addReply(commentId, replyId, text)}>{editMode ? 'Update': 'Send'} </button>
         </div>
       </ImgAndText>
     </StyledTextbox>
