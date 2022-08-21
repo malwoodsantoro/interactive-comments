@@ -12,18 +12,28 @@ const StyledTextbox = styled.div`
 
 const CurrentUserImg = styled.div`
   margin: 20px;
+
+  > img {
+    width: 2rem;
+  }
 `
 
 const ImgAndText = styled.div`
-display: flex;
+  display: flex;
+  justify-content: space-between;
 `
 
-const Textbox = ({ user, comment, addComment, addReply, isReply, commentId, replyId}) => {
+const Textbox = ({ user, comment, addComment, addReply, isReply, commentId, replyId, editContent }) => {
 
   const [text, setText] = useState("");
+  const [edit, setEdit] = useState(editContent)
 
   const handleChange = (e) => {
     setText(e.target.value);
+  }
+
+  const handleEdit = (e) => {
+    setEdit(e.target.value);
   }
 
   return (
@@ -32,15 +42,23 @@ const Textbox = ({ user, comment, addComment, addReply, isReply, commentId, repl
         <CurrentUserImg>
           <img src={require(`../images/avatars/image-juliusomo.webp`)} alt={'Photo of user ${$user}'} />
         </CurrentUserImg>
-        <textarea
-          type="text"
-          value={text}
-          placeholder="Add a comment..."
-          onChange={handleChange}
-        />
+        {edit ?
+          <textarea
+            type="text"
+            value={edit}
+            placeholder="Add a comment..."
+            onChange={handleEdit}
+          />
+          :
+          <textarea
+            type="text"
+            value={text}
+            placeholder="Add a comment..."
+            onChange={handleChange}
+          />
+        }
 
         <div>
-          <div>commentid: {commentId} replyid: {replyId}</div>
           <button onClick={!isReply ? () => addComment(text) : () => addReply(commentId, replyId, text)}>Send</button>
         </div>
       </ImgAndText>

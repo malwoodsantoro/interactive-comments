@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Textbox from "./Textbox";
 
 const StyledComment = styled.div`
-  width: ${({ isReply }) => isReply ? '30rem' : '36rem'};
+  width: ${({ comment }) => !comment ? '30rem' : '36rem'};
   font-size: 16px;
   background-color: #fff;
   padding: 20px;
@@ -18,24 +18,31 @@ const ToggleandContent = styled.div`
 `
 
 const DeleteandEdit = styled.div`
-margin-left: auto;
+  margin-left: auto;
 `
 
 const Delete = styled.span`
-margin-right: 5px;
+  margin-right: 5px;
 `
 
-const Edit= styled.span`
+const Edit = styled.span`
 `
 
 const StyledContent = styled.div`
   color: #616469;
+  display: flex;
+  text-align: left;
 `
 
 const Header = styled.div`
   display: flex;
   padding: 10px;
   align-items: center;
+
+  
+  > img {
+    width: 2rem;
+  }
 `;
 
 const User = styled.div`
@@ -48,13 +55,36 @@ const StyledCreatedAt = styled.div`
  color: #616469;
 `;
 
+const ReplyTo = styled.span`
+  color: hsl(238, 40%, 52%);
+  font-weight: bold;
+`;
+
 const StyledReply = styled.div`
   margin-left: auto;
   color: hsl(238, 40%, 52%);
   font-weight: bold;
 `;
 
-const Comment = ({ content, username, currentUser, current, score, createdAt, isReply, commentId, addReply, comment, replyId, deleteComment, editComment }) => {
+const CounterButton = styled.button`
+  padding: 0;
+  border: none;
+  background: none; 
+  padding: 5px;
+  color: hsl(238, 40%, 52%);
+`
+
+const Toggle = styled.div`
+  background-color: hsl(223, 19%, 93%);
+  padding: 10px;
+  border-radius: 3px;
+  margin-right: 10px;
+  color: hsl(238, 40%, 52%);
+  font-weight: bold;
+
+`
+
+const Post = ({ content, username, currentUser, current, score, createdAt, isReply, commentId, addReply, comment, replyId, deletePost, editComment, replyTo }) => {
 
   const [count, setCounts] = useState(score)
   const [open, setOpen] = useState(false)
@@ -63,19 +93,23 @@ const Comment = ({ content, username, currentUser, current, score, createdAt, is
     setOpen(!open)
   }
 
+  const edit = () => {
+    setOpen(!open)
+  }
+
   return (
     <div>
-      <StyledComment isReply={isReply}>
+      <StyledComment comment={comment}>
         <ToggleandContent>
-          <div>
-            <button onClick={() => setCounts(count + 1)}>
+          <Toggle>
+            <CounterButton onClick={() => setCounts(count + 1)}>
               +
-            </button>
+            </CounterButton>
             <span>{count}</span>
-            <button disabled={count <= 0 && true} onClick={() => setCounts(count - 1)}>
+            <CounterButton disabled={count <= 0 && true} onClick={() => setCounts(count - 1)}>
               -
-            </button>
-          </div>
+            </CounterButton>
+          </Toggle>
           <div>
             <Header>
               <img src={require(`../images/avatars/image-${username}.webp`)} alt={'Photo of user ${$username}'} />
@@ -84,20 +118,20 @@ const Comment = ({ content, username, currentUser, current, score, createdAt, is
               {!currentUser && <StyledReply onClick={replyToComment}>Reply</StyledReply>}
               {currentUser &&
                 <DeleteandEdit>
-                  <Delete onClick={() => deleteComment(isReply, commentId, replyId)}>Delete</Delete>
-                  <Edit onClick={editComment}>Edit</Edit>
+                  <Delete onClick={() => deletePost(isReply, commentId, replyId)}>Delete</Delete>
+                  <Edit onClick={() => edit(comment, commentId, replyId)}>Edit</Edit>
                 </DeleteandEdit>
               }
             </Header>
             <StyledContent>
-              {content}
+              {!comment ? <span><ReplyTo>@{replyTo} </ReplyTo>{content}</span> : <span>{content}</span>}
             </StyledContent>
           </div>
         </ToggleandContent>
       </StyledComment>
-      {open && <Textbox user={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId} isReply={true} />}
+      {open && <Textbox editContent={content} user={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId} isReply={true} />}
     </div>
   )
 }
 
-export default Comment
+export default Post

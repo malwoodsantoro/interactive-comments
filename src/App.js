@@ -1,5 +1,5 @@
 import './App.css';
-import Comments from './components/Comments';
+import Comments from './components/Posts';
 import data from './data.json';
 import React, { useState } from 'react';
 
@@ -50,7 +50,7 @@ function App() {
     setComments(updatedReplies)
   }
 
-  const deleteComment = (isReply, commentId, replyId) => {
+  const deletePost = (isReply, commentId, replyId) => {
 
     let commentIndex = comments.findIndex(x => x.id === commentId);
     let replyIndex = comments[commentIndex].replies.findIndex(x => (x.id = replyId));
@@ -69,15 +69,19 @@ function App() {
     }
   }
 
-  const editComment = () => {
-    alert('edit comment')
+  const editComment = (comment, commentId, replyId) => {
+    if (!comment) {
+      alert('reply!')
+    } else {
+      alert('comment')
+    }
   }
 
 
 
   return (
     <div className="App">
-      <Comments comments={comments} currentUser={currentUser} addComment={addToComments} addReply={addToReplies} deleteComment={deleteComment} editComment={editComment} />
+      <Comments comments={comments} currentUser={currentUser} addComment={addToComments} addReply={addToReplies} deletePost={deletePost} editComment={editComment} />
     </div>
   );
 }
