@@ -69,15 +69,55 @@ function App() {
     }
   }
 
-  const editComment = (comment, commentId, replyId, text) => {
+  const editComment = (comment, editedContent, commentId, replyId) => {
+    console.log(editedContent)
     if (!comment) {
-      alert('reply!')
-    } else {
-      alert('comment')
+      const newComments = comments.map((comment) => {
+        // if the index is not the one we want return the while grup as is
+        if (comment.id !== commentId) return comment;
+        // otherwise create a new one by spreading the existing
+        return {
+          ...comment,
+          // and override the prop which is changed
+          replies: comment.replies.map((reply) => {
+            // again if the component is not the one we want to update
+            // return it as is
+            if (reply.id !== replyId) return reply;
+            // otherwise create a new one by spreading the existing
+            // and adding/modifying the props we want
+            return {
+              ...reply,
+              content: editedContent
+            }
+          })
+        }
+      })
+      console.log(newComments)
+      setComments(newComments)
+      // let updatedReploo = comments.map(comment => {
+      //   if (comment.id == commentId) {
+      //     comment.replies.map(reply => {
+      //       if (reply.id == replyId) {
+      //         return {...comment, : 'cool'}
+      //       } else {
+      //         return reply
+      //       }
+      //     })
+      //   } else {
+      //   console.log('comment' + JSON.stringify(comment))
+      //   return comment
+      //   }
+      //   // return item; // else return unmodified item 
+      // })
+      // console.log(updatedReploo)
+      // setComments(updatedReploo)
+
+      // else {
+      //   let updatedComments = comments.filter(comment => !(comment.id === commentId));
+      //   setComments(updatedComments)
+      // }
     }
   }
-
-
 
   return (
     <div className="App">

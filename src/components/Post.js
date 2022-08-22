@@ -81,22 +81,30 @@ const Toggle = styled.div`
   margin-right: 10px;
   color: hsl(238, 40%, 52%);
   font-weight: bold;
-
 `
 
 const Post = ({ content, username, currentUser, current, score, createdAt, isReply, commentId, addReply, comment, replyId, deletePost, editComment, replyTo }) => {
 
   const [count, setCounts] = useState(score)
   const [open, setOpen] = useState(false)
-  const [edit, setEdit] = useState(false);
+  const [editedContent, setEditedContent] = useState(content)
+  const [editMode, setEditMode] = useState(false)
 
   const replyToComment = () => {
     setOpen(!open)
   }
 
   const editContent = () => {
-    setEdit(true);
-    setOpen(true);
+    setEditMode(true);
+  }
+
+  const handleEdit = (e) => {
+    setEditedContent(e.target.value);
+  }
+
+  const handleUpdate = (e) => {
+     editComment(comment, editedContent, commentId, replyId);
+     setEditMode(false);
   }
 
   return (
@@ -114,6 +122,7 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
           </Toggle>
           <div>
             <Header>
+              <div>{replyId}</div>
               <img src={require(`../images/avatars/image-${username}.webp`)} alt={'Photo of user ${$username}'} />
               <User>{username}</User>
               <StyledCreatedAt>{createdAt}</StyledCreatedAt>
@@ -126,12 +135,22 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
               }
             </Header>
             <StyledContent>
-              {!comment ? <span><ReplyTo>@{replyTo} </ReplyTo>{content}</span> : <span>{content}</span>}
+              {editMode ?
+                <span>
+                  <textarea
+                    type="text"
+                    value={editedContent}
+                    placeholder="Add a comment..."
+                    onChange={handleEdit}
+                  />
+                  <button onClick={handleUpdate}>Update</button>
+                </span>
+                : !comment ? <span><ReplyTo>@{replyTo} </ReplyTo>{content}</span> : <span>{content}</span>}
             </StyledContent>
           </div>
         </ToggleandContent>
       </StyledComment>
-      {open && <Textbox content={content} editMode={edit} user={current} addReply={addReply} editComment={editComment} comment={comment} commentId={commentId} replyId={replyId} isReply={true} />}
+      {open && <Textbox content={content} user={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId} isReply={true} />}
     </div>
   )
 }
