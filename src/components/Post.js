@@ -83,7 +83,7 @@ const Toggle = styled.div`
   font-weight: bold;
 `
 
-const Post = ({ content, username, currentUser, current, score, createdAt, isReply, commentId, addReply, comment, replyId, deletePost, editComment, replyTo }) => {
+const Post = ({ content, username, currentUser, current, score, createdAt, isReply, commentId, addReply, comment, replyId, deletePost, editComment, replyingTo, addComment }) => {
 
   const [count, setCounts] = useState(score)
   const [open, setOpen] = useState(false)
@@ -103,8 +103,8 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
   }
 
   const handleUpdate = (e) => {
-     editComment(comment, editedContent, commentId, replyId);
-     setEditMode(false);
+    editComment(comment, editedContent, commentId, replyId);
+    setEditMode(false);
   }
 
   return (
@@ -122,14 +122,13 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
           </Toggle>
           <div>
             <Header>
-              <div>{replyId}</div>
               <img src={require(`../images/avatars/image-${username}.webp`)} alt={'Photo of user ${$username}'} />
               <User>{username}</User>
               <StyledCreatedAt>{createdAt}</StyledCreatedAt>
               {!currentUser && <StyledReply onClick={replyToComment}>Reply</StyledReply>}
               {currentUser &&
                 <DeleteandEdit>
-                  <Delete onClick={() => deletePost(isReply, commentId, replyId)}>Delete</Delete>
+                  <Delete onClick={() => deletePost(comment, commentId, replyId)}>Delete</Delete>
                   <Edit onClick={() => editContent(comment, commentId, replyId)}>Edit</Edit>
                 </DeleteandEdit>
               }
@@ -145,12 +144,12 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
                   />
                   <button onClick={handleUpdate}>Update</button>
                 </span>
-                : !comment ? <span><ReplyTo>@{replyTo} </ReplyTo>{content}</span> : <span>{content}</span>}
+                : !comment ? <span><ReplyTo>@{replyingTo} </ReplyTo>{content}</span> : <span>{content}</span>}
             </StyledContent>
           </div>
         </ToggleandContent>
       </StyledComment>
-      {open && <Textbox content={content} user={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId} isReply={true} />}
+      {open && <Textbox content={content} user={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId} replyingTo={username} addComment={addComment} />}
     </div>
   )
 }

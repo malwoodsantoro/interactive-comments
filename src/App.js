@@ -12,7 +12,7 @@ function App() {
     setComments([...comments, {
       "id": 1,
       "content": text,
-      "createdAt": "1 month ago",
+      "createdAt": "1 sfsmonth ago",
       "score": 12,
       "user": {
         "image": {
@@ -25,42 +25,43 @@ function App() {
     }])
   }
 
-  const addToReplies = (commentId, text) => {
+  const addToReplies = (commentId, replyId, text, replyingTo) => {
+    console.log('reply id' + replyingTo)
     const testObject = {
-      "id": 3,
+      "id": replyId + 1,
       "content": text,
-      "createdAt": "1 week ago",
-      "score": 4,
-      "replyingTo": "maxblagun",
+      "createdAt": "Just now",
+      "score": 0,
+      "replyingTo": replyingTo,
       "user": {
         "image": {
           "png": "./images/avatars/image-ramsesmiron.png",
           "webp": "./images/avatars/image-ramsesmiron.webp"
         },
-        "username": "ramsesmiron"
+        "username": currentUser
       }
     }
 
     let updatedReplies = comments.map(item => {
       if (item.id == commentId) {
-        return { ...item, replies: [...item.replies, testObject] }; //gets everything that was already in item, and updates "done"
+        return { ...item, replies: [...item.replies, testObject] }; 
       }
-      return item; // else return unmodified item 
+      return item;
     });
     setComments(updatedReplies)
   }
 
-  const deletePost = (isReply, commentId, replyId) => {
+  const deletePost = (comment, commentId, replyId) => {
 
     let commentIndex = comments.findIndex(x => x.id === commentId);
     let replyIndex = comments[commentIndex].replies.findIndex(x => (x.id = replyId));
 
-    if (isReply) {
+    if (!comment) {
       let updatedReplies = comments.map(item => {
         if (item.id == commentId) {
-          return { ...item, replies: [...item.replies.splice(replyIndex, 1)] }; //gets everything that was already in item, and updates "done"
+          return { ...item, replies: [...item.replies.splice(replyIndex, 1)] }; 
         }
-        return item; // else return unmodified item 
+        return item; 
       });
       setComments(updatedReplies)
     } else {
@@ -70,21 +71,17 @@ function App() {
   }
 
   const editComment = (comment, editedContent, commentId, replyId) => {
-    console.log(editedContent)
     if (!comment) {
       const newComments = comments.map((comment) => {
-        // if the index is not the one we want return the while grup as is
+
         if (comment.id !== commentId) return comment;
-        // otherwise create a new one by spreading the existing
+
         return {
           ...comment,
-          // and override the prop which is changed
           replies: comment.replies.map((reply) => {
-            // again if the component is not the one we want to update
-            // return it as is
+
             if (reply.id !== replyId) return reply;
-            // otherwise create a new one by spreading the existing
-            // and adding/modifying the props we want
+
             return {
               ...reply,
               content: editedContent
@@ -94,28 +91,6 @@ function App() {
       })
       console.log(newComments)
       setComments(newComments)
-      // let updatedReploo = comments.map(comment => {
-      //   if (comment.id == commentId) {
-      //     comment.replies.map(reply => {
-      //       if (reply.id == replyId) {
-      //         return {...comment, : 'cool'}
-      //       } else {
-      //         return reply
-      //       }
-      //     })
-      //   } else {
-      //   console.log('comment' + JSON.stringify(comment))
-      //   return comment
-      //   }
-      //   // return item; // else return unmodified item 
-      // })
-      // console.log(updatedReploo)
-      // setComments(updatedReploo)
-
-      // else {
-      //   let updatedComments = comments.filter(comment => !(comment.id === commentId));
-      //   setComments(updatedComments)
-      // }
     }
   }
 
