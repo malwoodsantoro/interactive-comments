@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import React, { useState } from 'react';
 import Textbox from "./Textbox";
+import { BsFillReplyFill } from "react-icons/bs";
+import { BsPencil } from "react-icons/bs";
+import { BsTrashFill } from "react-icons/bs";
 
 const StyledPost = styled.div`
   width: ${({ comment }) => !comment ? '30rem' : '36rem'};
@@ -22,7 +25,9 @@ const DeleteandEdit = styled.div`
 `
 
 const Delete = styled.span`
-  margin-right: 5px;
+  margin-right: 10px;
+  color: hsl(358, 79%, 66%);
+  font-weight: bold;
 `
 
 const StyledContent = styled.div`
@@ -66,6 +71,11 @@ const HeaderandContent = styled.span`
 `;
 const StyledReply = styled.div`
   margin-left: auto;
+  color: hsl(238, 40%, 52%);
+  font-weight: bold;
+`;
+
+const StyledEdit = styled.span`
   color: hsl(238, 40%, 52%);
   font-weight: bold;
 `;
@@ -141,11 +151,11 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
               <img src={require(`../images/avatars/image-${username}.webp`)} alt={'Photo of user ${$username}'} />
               <User>{username}</User>
               <StyledCreatedAt>{createdAt}</StyledCreatedAt>
-              {!currentUser && <StyledReply onClick={replyToComment}>Reply</StyledReply>}
+              {!currentUser && <StyledReply onClick={replyToComment}><BsFillReplyFill /> Reply</StyledReply>}
               {currentUser &&
                 <DeleteandEdit>
-                  <Delete onClick={() => deletePost(comment, commentId, replyId)}>Delete</Delete>
-                  <span onClick={() => editContent(comment, commentId, replyId)}>Edit</span>
+                  <Delete onClick={() => deletePost(comment, commentId, replyId)}><BsTrashFill />Delete</Delete>
+                  <StyledEdit onClick={() => editContent(comment, commentId, replyId)}><BsPencil/> Edit</StyledEdit>
                 </DeleteandEdit>
               }
             </Header>
