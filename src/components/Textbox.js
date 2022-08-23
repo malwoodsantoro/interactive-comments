@@ -3,15 +3,14 @@ import React, { useState } from 'react';
 
 const StyledTextbox = styled.div`
   width: ${({ comment }) => !comment ? '30rem' : '36rem'};
-  margin-left: ${({ comment}) => !comment && '10px;'};
-  background-color: #fff;
+  margin: ${({ comment}) => !comment && '10px;'};
+  background-color: white;
   border-radius: 5px;
-  padding: 10px;
-  margin-top: 10px;
+  padding: 20px;
+  margin: 10px;
 `
 
 const CurrentUserImg = styled.div`
-
   > img {
     width: 2rem;
     padding-right: 10px;
@@ -22,7 +21,7 @@ const ImgAndText = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 10px;
+
 `
 
 const Button = styled.button`

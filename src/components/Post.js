@@ -109,6 +109,11 @@ const Button = styled.button`
   text-transform: uppercase;
 `;
 
+const Full = styled.div`
+display: flex;
+flex-direction: column;
+`
+
 const Post = ({ content, username, currentUser, current, score, createdAt, isReply, commentId, addReply, comment, replyId, deletePost, editComment, replyingTo, addComment }) => {
 
   const [count, setCounts] = useState(score)
@@ -134,7 +139,7 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
   }
 
   return (
-    <div>
+    <Full>
       <StyledPost comment={comment}>
         <ToggleandContent>
           <Toggle>
@@ -180,7 +185,7 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
         </ToggleandContent>
       </StyledPost>
       {open && <Textbox content={content} user={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId} replyingTo={username} addComment={addComment} />}
-    </div>
+    </Full>
   )
 }
 
