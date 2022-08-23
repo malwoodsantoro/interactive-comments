@@ -25,7 +25,7 @@ function App() {
     }])
   }
 
-  const addToReplies = (commentId, replyId, text, replyingTo) => {
+  const addReply = (commentId, replyId, text, replyingTo) => {
     console.log('reply id' + replyingTo)
     const testObject = {
       "id": replyId + 1,
@@ -41,10 +41,9 @@ function App() {
         "username": currentUser
       }
     }
-
     let updatedReplies = comments.map(item => {
       if (item.id == commentId) {
-        return { ...item, replies: [...item.replies, testObject] }; 
+        return { ...item, replies: [...item.replies, testObject] };
       }
       return item;
     });
@@ -59,9 +58,9 @@ function App() {
     if (!comment) {
       let updatedReplies = comments.map(item => {
         if (item.id == commentId) {
-          return { ...item, replies: [...item.replies.splice(replyIndex, 1)] }; 
+          return { ...item, replies: [...item.replies.splice(replyIndex, 1)] };
         }
-        return item; 
+        return item;
       });
       setComments(updatedReplies)
     } else {
@@ -96,7 +95,7 @@ function App() {
 
   return (
     <div className="App">
-      <Comments comments={comments} currentUser={currentUser} addComment={addToComments} addReply={addToReplies} deletePost={deletePost} editComment={editComment} />
+      <Comments comments={comments} currentUser={currentUser} addComment={addToComments} addReply={addReply} deletePost={deletePost} editComment={editComment} />
     </div>
   );
 }

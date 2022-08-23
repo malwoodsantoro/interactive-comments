@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React, { useState } from 'react';
 import Textbox from "./Textbox";
 
-const StyledComment = styled.div`
+const StyledPost = styled.div`
   width: ${({ comment }) => !comment ? '30rem' : '36rem'};
   font-size: 16px;
   background-color: #fff;
@@ -25,21 +25,22 @@ const Delete = styled.span`
   margin-right: 5px;
 `
 
-const Edit = styled.span`
-`
-
 const StyledContent = styled.div`
   color: #616469;
   display: flex;
   text-align: left;
 `
 
+const EditMode = styled.span`
+  display: flex;
+  justify-content: space-around;
+  flex-grow: 3;
+`
+
 const Header = styled.div`
   display: flex;
   padding: 10px;
-  align-items: center;
 
-  
   > img {
     width: 2rem;
   }
@@ -60,6 +61,9 @@ const ReplyTo = styled.span`
   font-weight: bold;
 `;
 
+const HeaderandContent = styled.span`
+  flex-grow: 3;
+`;
 const StyledReply = styled.div`
   margin-left: auto;
   color: hsl(238, 40%, 52%);
@@ -75,6 +79,8 @@ const CounterButton = styled.button`
 `
 
 const Toggle = styled.div`
+  display: flex;
+  flex-direction: column;
   background-color: hsl(223, 19%, 93%);
   padding: 10px;
   border-radius: 3px;
@@ -82,6 +88,16 @@ const Toggle = styled.div`
   color: hsl(238, 40%, 52%);
   font-weight: bold;
 `
+
+const Button = styled.button`
+  background: hsl(238, 40%, 52%);
+  border-radius: 3px;
+  border: none;
+  color: white;
+  font-size: 1em;
+  padding: 0.5em 1.5em;
+  text-transform: uppercase;
+`;
 
 const Post = ({ content, username, currentUser, current, score, createdAt, isReply, commentId, addReply, comment, replyId, deletePost, editComment, replyingTo, addComment }) => {
 
@@ -109,7 +125,7 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
 
   return (
     <div>
-      <StyledComment comment={comment}>
+      <StyledPost comment={comment}>
         <ToggleandContent>
           <Toggle>
             <CounterButton onClick={() => setCounts(count + 1)}>
@@ -120,7 +136,7 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
               -
             </CounterButton>
           </Toggle>
-          <div>
+          <HeaderandContent>
             <Header>
               <img src={require(`../images/avatars/image-${username}.webp`)} alt={'Photo of user ${$username}'} />
               <User>{username}</User>
@@ -129,26 +145,30 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
               {currentUser &&
                 <DeleteandEdit>
                   <Delete onClick={() => deletePost(comment, commentId, replyId)}>Delete</Delete>
-                  <Edit onClick={() => editContent(comment, commentId, replyId)}>Edit</Edit>
+                  <span onClick={() => editContent(comment, commentId, replyId)}>Edit</span>
                 </DeleteandEdit>
               }
             </Header>
             <StyledContent>
               {editMode ?
-                <span>
-                  <textarea
-                    type="text"
-                    value={editedContent}
-                    placeholder="Add a comment..."
-                    onChange={handleEdit}
-                  />
-                  <button onClick={handleUpdate}>Update</button>
-                </span>
+                <EditMode className="editttt">
+                  <div>
+                    <textarea
+                      type="text"
+                      value={editedContent}
+                      placeholder="Add a comment..."
+                      onChange={handleEdit}
+                    />
+                  </div>
+                  <div>
+                    <Button onClick={handleUpdate}>Update</Button>
+                  </div>
+                </EditMode>
                 : !comment ? <span><ReplyTo>@{replyingTo} </ReplyTo>{content}</span> : <span>{content}</span>}
             </StyledContent>
-          </div>
+          </HeaderandContent>
         </ToggleandContent>
-      </StyledComment>
+      </StyledPost>
       {open && <Textbox content={content} user={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId} replyingTo={username} addComment={addComment} />}
     </div>
   )

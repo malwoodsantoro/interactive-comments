@@ -35,7 +35,7 @@ const Button = styled.button`
   text-transform: uppercase;
 `;
 
-const Textbox = ({ user, content, comment, addComment, addReply, isReply, commentId, replyId, replyingTo }) => {
+const Textbox = ({ user, content, comment, addComment, addReply, isReply, commentId, replyId, replyingTo, bottomBox }) => {
 
   const [text, setText] = useState("");
 
@@ -44,7 +44,7 @@ const Textbox = ({ user, content, comment, addComment, addReply, isReply, commen
   }
 
   const handleSubmit = (e) => {
-    if (comment) {
+    if (bottomBox) {
       addComment(text)
     } else {
       addReply(commentId, replyId, text, replyingTo)
