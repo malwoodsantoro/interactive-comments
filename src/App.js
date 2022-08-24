@@ -13,12 +13,12 @@ function App() {
     setComments([...comments, {
       "id": 1,
       "content": text,
-      "createdAt": "1 sfsmonth ago",
-      "score": 12,
+      "createdAt": "Just now",
+      "score": "0",
       "user": {
         "image": {
-          "png": "./images/avatars/image-amyrobson.png",
-          "webp": "./images/avatars/image-amyrobson.webp"
+          "png": `./images/avatars/image-${currentUser}.png`,
+          "webp": `./images/avatars/image-${currentUser}.webp`
         },
         "username": currentUser
       },

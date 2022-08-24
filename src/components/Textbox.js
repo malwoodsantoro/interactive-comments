@@ -8,6 +8,10 @@ const StyledTextbox = styled.div`
   border-radius: 5px;
   padding: 20px;
   margin: 10px;
+
+  @media (max-width: 480px) {
+    width: ${({ comment }) => !comment ? '20rem' : '26rem'};
+  }
 `
 
 const CurrentUserImg = styled.div`
