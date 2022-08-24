@@ -59,17 +59,6 @@ const EditMode = styled.span`
   flex-grow: 3;
 `
 
-const Header = styled.div`
-  @media (min-width: 480px) {
-    display: flex;
-  }
-  padding: 10px;
-
-  > img {
-    width: 2rem;
-  }
-`;
-
 const User = styled.div`
   font-weight: bold;
   margin-left: 10px;
@@ -87,27 +76,29 @@ const ReplyTo = styled.span`
 
 const UserandCreated = styled.div`
     display: flex;
+    align-items: center;
+
+    > img {
+      width: 2rem;
+    }
+
 `
 
 const HeaderandContent = styled.span`
-  flex-grow: 3;
 `;
+
 const StyledReply = styled.div`
   margin-left: auto;
   color: hsl(238, 40%, 52%);
   font-weight: bold;
-
-  @media (max-width: 480px) {
-    text-align: right;
-    margin-left: 100px;
-    margin-top: 40px;
-  }
+  display: flex;
 
 `;
 
 const StyledEdit = styled.span`
   color: hsl(238, 40%, 52%);
   font-weight: bold;
+  display: flex;
 `;
 
 const Button = styled.button`
@@ -125,20 +116,16 @@ display: flex;
 flex-direction: column;
 `
 
-const ButtonsandContent = styled.span`
-@media (max-width: 480px) {
-  display: flex;
-  flex-direction: column-reverse;
-}
-display: flex;
-
-flex-direction: column;
-text-align: right;
-`
-
 const Buttons = styled.div`
-  float: right;
-  margin-top: -30px;
+
+@media (min-width: 481px) {
+  order: 3;
+  align-self: start;
+ }
+  @media (max-width: 480px) {
+   background-color: red;
+   align-self: flex-end;
+  }
 `
 
 
@@ -172,16 +159,7 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
       <StyledPost comment={comment}>
         <ToggleandContent>
           <Counter score={score} />
-          <HeaderandContent>
-            <Header>
-              <UserandCreated>
-                <img src={require(`../images/avatars/image-${username}.webp`)} alt={'Photo of user ${$username}'} />
-                <User>{username}</User>
-                <StyledCreatedAt>{createdAt}</StyledCreatedAt>
-              </UserandCreated>
-            </Header>
-            <ButtonsandContent>
-              <Buttons>
+          <Buttons>
                 {!currentUser && <StyledReply onClick={replyToComment}><BsFillReplyFill /> Reply</StyledReply>}
                 {currentUser &&
                   <DeleteandEdit>
@@ -190,6 +168,12 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
                   </DeleteandEdit>
                 }
               </Buttons>
+          <HeaderandContent>
+              <UserandCreated>
+                <img src={require(`../images/avatars/image-${username}.webp`)} alt={'Photo of user ${$username}'} />
+                <User>{username}</User>
+                <StyledCreatedAt>{createdAt}</StyledCreatedAt>
+              </UserandCreated>
               <StyledContent>
                 {editMode ?
                   <EditMode className="editttt">
@@ -207,7 +191,6 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
                   </EditMode>
                   : !comment ? <span><ReplyTo>@{replyingTo} </ReplyTo>{content}</span> : <span>{content}</span>}
               </StyledContent>
-            </ButtonsandContent>
           </HeaderandContent>
         </ToggleandContent>
       </StyledPost>
