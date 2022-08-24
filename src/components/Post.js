@@ -1,9 +1,14 @@
 import styled from "styled-components";
 import React, { useState } from 'react';
 import Textbox from "./Textbox";
+
 import { BsFillReplyFill } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
 import { BsTrashFill } from "react-icons/bs";
+
+import Modal from './Modal'
+import useModal from './useModal';
+
 
 const StyledPost = styled.div`
   width: ${({ comment }) => !comment ? '30rem' : '36rem'};
@@ -121,6 +126,8 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
   const [editedContent, setEditedContent] = useState(content)
   const [editMode, setEditMode] = useState(false)
 
+  const {isShowing, toggle} = useModal();
+
   const replyToComment = () => {
     setOpen(!open)
   }
@@ -159,7 +166,7 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
               {!currentUser && <StyledReply onClick={replyToComment}><BsFillReplyFill /> Reply</StyledReply>}
               {currentUser &&
                 <DeleteandEdit>
-                  <Delete onClick={() => deletePost(comment, commentId, replyId)}><BsTrashFill />Delete</Delete>
+                  <Delete onClick={toggle}><BsTrashFill />Delete</Delete>
                   <StyledEdit onClick={() => editContent(comment, commentId, replyId)}><BsPencil/> Edit</StyledEdit>
                 </DeleteandEdit>
               }
@@ -185,6 +192,11 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
         </ToggleandContent>
       </StyledPost>
       {open && <Textbox content={content} user={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId} replyingTo={username} addComment={addComment} />}
+      <Modal
+        isShowing={isShowing}
+        hide={toggle}
+        yesAction={() => deletePost(comment, commentId, replyId) }
+      />
     </Full>
   )
 }

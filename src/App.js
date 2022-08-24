@@ -1,6 +1,7 @@
 import './App.css';
 import Comments from './components/Posts';
 import data from './data.json';
+import Modal from "./components/Modal";
 import React, { useState } from 'react';
 
 function App() {
@@ -51,7 +52,7 @@ function App() {
   }
 
   const deletePost = (comment, commentId, replyId) => {
-
+    
     let commentIndex = comments.findIndex(x => x.id === commentId);
     let replyIndex = comments[commentIndex].replies.findIndex(x => (x.id = replyId));
 
