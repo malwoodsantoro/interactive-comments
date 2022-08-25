@@ -35,7 +35,10 @@ const ToggleandContent = styled.div`
 
 const DeleteandEdit = styled.div`
   margin-left: auto;
+  color: hsl(238, 40%, 52%);
+  font-weight: bold;
   display: flex;
+  margin-left: -80px;
 `
 
 const Delete = styled.span`
@@ -56,7 +59,8 @@ const StyledContent = styled.div`
 const EditMode = styled.span`
   display: flex;
   justify-content: space-around;
-  flex-grow: 3;
+  flex-grow: 1;
+}
 `
 
 const User = styled.div`
@@ -65,8 +69,8 @@ const User = styled.div`
 `;
 
 const StyledCreatedAt = styled.div`
- padding-left: 10px;
- color: #616469;
+  padding-left: 10px;
+  color: #616469;
 `;
 
 const ReplyTo = styled.span`
@@ -85,6 +89,12 @@ const UserandCreated = styled.div`
 `
 
 const HeaderandContent = styled.span`
+@media (min-width: 481px) {
+  flex-grow: 1;
+}
+
+  margin-right: auto;
+}
 `;
 
 const StyledReply = styled.div`
@@ -92,7 +102,7 @@ const StyledReply = styled.div`
   color: hsl(238, 40%, 52%);
   font-weight: bold;
   display: flex;
-
+  margin-left: -40px;
 `;
 
 const StyledEdit = styled.span`
@@ -112,24 +122,25 @@ const Button = styled.button`
 `;
 
 const Full = styled.div`
-display: flex;
-flex-direction: column;
+  display: flex;
+  flex-direction: column;
 `
 
 const Buttons = styled.div`
+  @media (min-width: 481px) {
+    order: 3;
+    align-self: start;
+  }
 
-@media (min-width: 481px) {
-  order: 3;
-  align-self: start;
- }
   @media (max-width: 480px) {
-   background-color: red;
    align-self: flex-end;
+   margin-top: 10px;
+   margin-bottom: -20px;
   }
 `
 
 
-const Post = ({ content, username, currentUser, current, score, createdAt, isReply, commentId, addReply, comment, replyId, deletePost, editComment, replyingTo, addComment }) => {
+const Post = ({ content, username, isCurrentUser, current, score, createdAt, commentId, addReply, comment, replyId, deletePost, editComment, replyingTo, addComment }) => {
 
   const [open, setOpen] = useState(false)
   const [editedContent, setEditedContent] = useState(content)
@@ -160,41 +171,41 @@ const Post = ({ content, username, currentUser, current, score, createdAt, isRep
         <ToggleandContent>
           <Counter score={score} />
           <Buttons>
-                {!currentUser && <StyledReply onClick={replyToComment}><BsFillReplyFill /> Reply</StyledReply>}
-                {currentUser &&
-                  <DeleteandEdit>
-                    <Delete onClick={toggle}><BsTrashFill />Delete</Delete>
-                    <StyledEdit onClick={() => editContent(comment, commentId, replyId)}><BsPencil /> Edit</StyledEdit>
-                  </DeleteandEdit>
-                }
-              </Buttons>
+            {!isCurrentUser && <StyledReply onClick={replyToComment}><BsFillReplyFill /> Reply</StyledReply>}
+            {isCurrentUser &&
+              <DeleteandEdit>
+                <Delete onClick={toggle}><BsTrashFill />Delete</Delete>
+                <StyledEdit onClick={() => editContent(comment, commentId, replyId)}><BsPencil /> Edit</StyledEdit>
+              </DeleteandEdit>
+            }
+          </Buttons>
           <HeaderandContent>
-              <UserandCreated>
-                <img src={require(`../images/avatars/image-${username}.webp`)} alt={'Photo of user ${$username}'} />
-                <User>{username}</User>
-                <StyledCreatedAt>{createdAt}</StyledCreatedAt>
-              </UserandCreated>
-              <StyledContent>
-                {editMode ?
-                  <EditMode className="editttt">
-                    <div>
-                      <textarea
-                        type="text"
-                        value={editedContent}
-                        placeholder="Add a comment..."
-                        onChange={handleEdit}
-                      />
-                    </div>
-                    <div>
-                      <Button onClick={handleUpdate}>Update</Button>
-                    </div>
-                  </EditMode>
-                  : !comment ? <span><ReplyTo>@{replyingTo} </ReplyTo>{content}</span> : <span>{content}</span>}
-              </StyledContent>
+            <UserandCreated>
+              <img src={require(`../images/avatars/image-${username}.webp`)} alt={'Photo of user ${$username}'} />
+              <User>{username}</User>
+              <StyledCreatedAt>{createdAt}</StyledCreatedAt>
+            </UserandCreated>
+            <StyledContent>
+              {editMode ?
+                <EditMode className="editttt">
+                  <div>
+                    <textarea
+                      type="text"
+                      value={editedContent}
+                      placeholder="Add a comment..."
+                      onChange={handleEdit}
+                    />
+                  </div>
+                  <div>
+                    <Button onClick={handleUpdate}>Update</Button>
+                  </div>
+                </EditMode>
+                : !comment ? <span><ReplyTo>@{replyingTo} </ReplyTo>{content}</span> : <span>{content}</span>}
+            </StyledContent>
           </HeaderandContent>
         </ToggleandContent>
       </StyledPost>
-      {open && <Textbox content={content} user={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId} replyingTo={username} addComment={addComment} />}
+      {open && <Textbox content={content} current={current} addReply={addReply} comment={comment} commentId={commentId} replyId={replyId} replyingTo={username} addComment={addComment} />}
       <Modal
         isShowing={isShowing}
         hide={toggle}

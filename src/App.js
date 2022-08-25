@@ -1,7 +1,6 @@
 import './App.css';
 import Comments from './components/Posts';
 import data from './data.json';
-import Modal from "./components/Modal";
 import React, { useState } from 'react';
 
 function App() {
@@ -27,7 +26,6 @@ function App() {
   }
 
   const addReply = (commentId, replyId, text, replyingTo) => {
-    console.log('reply id' + replyingTo)
     const testObject = {
       "id": replyId + 1,
       "content": text,
@@ -36,8 +34,8 @@ function App() {
       "replyingTo": replyingTo,
       "user": {
         "image": {
-          "png": "./images/avatars/image-ramsesmiron.png",
-          "webp": "./images/avatars/image-ramsesmiron.webp"
+          "png": `./images/avatars/image-${currentUser}.png`,
+          "webp": `./images/avatars/image-${currentUser}.webp`
         },
         "username": currentUser
       }

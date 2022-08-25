@@ -14,7 +14,8 @@ const Toggle = styled.div`
   @media (max-width: 480px) {
     flex-direction: row;
      align-self: flex-start;
-     margin-top: -20px;
+     align-items: center;
+     padding: 5px 10px;
   }
 `
 
@@ -24,6 +25,11 @@ const CounterButton = styled.button`
   background: none; 
   padding: 5px;
   color: hsl(238, 40%, 52%);
+
+  @media (max-width: 480px) {
+     padding: 5px 10px;
+  }
+
 `
 
 const Counter = ({score}) => {

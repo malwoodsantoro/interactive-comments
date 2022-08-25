@@ -38,7 +38,7 @@ const Button = styled.button`
   text-transform: uppercase;
 `;
 
-const Textbox = ({ user, content, comment, addComment, addReply, isReply, commentId, replyId, replyingTo, bottomBox }) => {
+const Textbox = ({ current, comment, addComment, addReply, commentId, replyId, replyingTo, isBottomBox }) => {
 
   const [text, setText] = useState("");
 
@@ -47,7 +47,7 @@ const Textbox = ({ user, content, comment, addComment, addReply, isReply, commen
   }
 
   const handleSubmit = (e) => {
-    if (bottomBox) {
+    if (isBottomBox) {
       addComment(text)
     } else {
       addReply(commentId, replyId, text, replyingTo)
@@ -59,7 +59,7 @@ const Textbox = ({ user, content, comment, addComment, addReply, isReply, commen
     <StyledTextbox comment={comment}>
       <ImgAndText>
         <CurrentUserImg>
-          <img src={require(`../images/avatars/image-juliusomo.webp`)} alt={'Photo of user ${$user}'} />
+          <img src={require(`../images/avatars/image-${current}.webp`)} alt={'Photo of user ${$current}'} />
         </CurrentUserImg>
         <textarea
           type="text"
