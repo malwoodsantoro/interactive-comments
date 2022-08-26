@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 
 const Toggle = styled.div`
   display: flex;
@@ -34,14 +34,14 @@ const CounterButton = styled.button`
 
 const Counter = ({score}) => {
 
-  const count = useRef(0)
+  const [count, setCount] = useState(score)
 
     const handleIncrement = () => {
-      count.current ++
+      setCount(prevCount => prevCount + 1)
     };
   
     const handleDecrement = () => {
-      count.current --
+      setCount(prevCount => prevCount - 1)
     };
 
   return (
