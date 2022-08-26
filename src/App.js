@@ -1,5 +1,5 @@
 import './App.css';
-import Comments from './components/Posts';
+import Comments from './components/Posts/Posts';
 import data from './data.json';
 import React, { useState } from 'react';
 

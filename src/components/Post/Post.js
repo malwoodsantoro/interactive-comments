@@ -1,14 +1,14 @@
 import styled from "styled-components";
 import React, { useState } from 'react';
-import Textbox from "./Textbox";
-import Counter from "./Counter";
+import Textbox from "../Textbox";
+import Counter from "../Counter";
 
 import { BsFillReplyFill } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
 import { BsTrashFill } from "react-icons/bs";
 
-import Modal from './Modal'
-import useModal from './useModal';
+import Modal from '../Modal'
+import useModal from '../useModal';
 
 const StyledPost = styled.div`
   width: ${({ comment }) => !comment ? '30rem' : '36rem'};
@@ -181,7 +181,7 @@ const Post = ({ content, username, isCurrentUser, current, score, createdAt, com
           </Buttons>
           <HeaderandContent>
             <UserandCreated>
-              <img src={require(`../images/avatars/image-${username}.webp`)} alt={'Photo of user ${$username}'} />
+              <img src={require(`../../images/avatars/image-${username}.webp`)} alt={`Photo of user ${username}`} />
               <User>{username}</User>
               <StyledCreatedAt>{createdAt}</StyledCreatedAt>
             </UserandCreated>

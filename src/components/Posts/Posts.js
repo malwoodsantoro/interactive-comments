@@ -1,6 +1,6 @@
-import Post from "./Post"
+import Post from "../Post/Post"
 import styled from "styled-components";
-import Textbox from "./Textbox";
+import Textbox from "../Textbox";
 import React, { useState } from 'react';
 
 const StyledPosts = styled.div`
@@ -21,16 +21,16 @@ const Posts = ({ comments, currentUser, addComment, addReply, deletePost, editCo
   return (
     <StyledPosts>
       {
-        comments.map(({ content, user, index, replies, createdAt, id: commentId, score }) => {
+        comments.map(({ content, user, replies, createdAt, id: commentId, score }, index) => {
           return (
-            <div className="posts">
+            <div key={index} className="posts">
               <Post key={index} username={user.username} score={score} content={content} createdAt={createdAt} isCurrentUser={(currentUser == user.username) ? true : false} current={currentUser} comment={true} commentId={commentId} addReply={addReply} deletePost={deletePost} editComment={editComment} addComment={addComment} />
               <StyledReplies>
-                {replies.length > 0 && replies.map(({ index: replyIndex, user, content, createdAt, id: replyId, score, replyingTo }) => {
+                {replies.length > 0 && replies.map(({ user, content, createdAt, id: replyId, score, replyingTo }, index) => {
                   return (
-                    <Post key={replyIndex} username={user.username} score={score} content={content} createdAt={createdAt} isCurrentUser={(currentUser == user.username) ? true : false} current={currentUser} comment={false} replyingTo={replyingTo} addReply={addReply} commentId={commentId} replyId={replyId} deletePost={deletePost} editComment={editComment} addComment={addComment} />
-                  )
-                }
+                    <Post key={index} username={user.username} score={score} content={content} createdAt={createdAt} isCurrentUser={(currentUser == user.username) ? true : false} current={currentUser} comment={false} replyingTo={replyingTo} addReply={addReply} commentId={commentId} replyId={replyId} deletePost={deletePost} editComment={editComment} addComment={addComment} />
+                    )
+                  }
                 )}
               </StyledReplies>
             </div>
