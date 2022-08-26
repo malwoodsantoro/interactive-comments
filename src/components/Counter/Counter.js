@@ -49,7 +49,7 @@ const Counter = ({score}) => {
       <CounterButton onClick={handleIncrement}>
         +
       </CounterButton>
-      <span>{count}</span>
+      <div data-testid='count'>{count}</div>
       <CounterButton disabled={count <= 0 && true} onClick={handleDecrement}>
         -
       </CounterButton>

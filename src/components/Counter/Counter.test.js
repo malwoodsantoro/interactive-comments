@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, fireEvent, wait } from '@testing-library/react'
 import { screen } from '@testing-library/dom'
 import Counter from './Counter'
 
@@ -24,12 +24,12 @@ describe('User interaction with post functions as expected', () => {
 
     const incrementNode = getByText('+')
     const decrementNode = getByText('-')
-    const scoreNode = getByText(score)
 
-    expect(incrementNode).toBeVisible()
-    expect(decrementNode).toBeVisible()
-    expect(scoreNode).toBeVisible()
+    fireEvent.click(incrementNode)
+    fireEvent.click(incrementNode)
+    expect(screen.getByTestId('count').innerHTML).toBe('2')
 
-
+    fireEvent.click(decrementNode)
+    expect(screen.getByTestId('count').innerHTML).toBe('1')
   })
 })
