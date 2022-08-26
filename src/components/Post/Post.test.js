@@ -35,7 +35,7 @@ describe('Comment and reply renders as expected', () => {
       content: 'This is some sample content',
       username: 'ramsesmiron',
       isCurrentUser: false,
-      current: true,
+      current: 'ramsesmiron',
       replyingTo: 'maxblagun',
       score: 4,
       comment: false
@@ -60,24 +60,51 @@ describe('Comment and reply renders as expected', () => {
     expect(contentNode).toHaveTextContent(`${reply}`)
 
   })
-})
 
-describe('User interaction with post functions as expected', () => {
-  test('reply toggle works', () => {
+  test('current user renders delete and edit buttons', () => {
     const props = {
       content: 'This is some sample content',
-      username: 'ramsesmiron',
+      username: 'maxblagun',
       isCurrentUser: false,
       current: 'ramsesmiron',
       score: 4
     }
 
     const { getByText } = render(<Post {...props} />)
+
+    const contentNode = getByText(props.content)
+    const usernameNode = getByText(props.username)
     const replyLink = getByText('Reply')
 
-    fireEvent.click(replyLink)
+    expect(contentNode).toBeDefined()
+    expect(usernameNode).toBeDefined()
+    expect(replyLink).toBeDefined()
 
-    expect(screen.getByPlaceholderText(/Add a comment/)).toBeInTheDocument()
+    const image = screen.getByAltText(/Photo of user/);
+
+    expect(image.src).toContain('image-');
+    expect(image).toHaveAttribute('src', 'image-maxblagun.webp')
+  })
+})
+
+describe('User interaction with post functions as expected', () => {
+  test('reply toggle works', () => {
+    const props = {
+      content: 'This is some sample content',
+      username: 'maxblagun',
+      isCurrentUser: true,
+      current: 'maxblagun',
+      score: 4
+    }
+
+    const { getByText } = render(<Post {...props} />)
+
+    const deleteLink = getByText('Delete')
+    const editLink = getByText('Edit')
+
+    expect(deleteLink).toBeDefined()
+    expect(editLink).toBeDefined()
+
 
   })
 
