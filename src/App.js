@@ -1,5 +1,5 @@
 import './App.css';
-import Comments from './components/Posts/Posts';
+import Posts from './components/Posts/Posts';
 import data from './data.json';
 import React, { useState } from 'react';
 
@@ -93,7 +93,7 @@ function App() {
 
   return (
     <div className="App">
-      <Comments comments={comments} currentUser={currentUser} addComment={addToComments} addReply={addReply} deletePost={deletePost} editComment={editComment} />
+      <Posts comments={comments} currentUser={currentUser} addComment={addToComments} addReply={addReply} deletePost={deletePost} editComment={editComment} />
     </div>
   );
 }
