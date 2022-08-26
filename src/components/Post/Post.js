@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, { useState } from 'react';
 import Textbox from "../Textbox";
-import Counter from "../Counter";
+import Counter from "../Counter/Counter";
 
 import { BsFillReplyFill } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";

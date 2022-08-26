@@ -89,21 +89,24 @@ describe('Comment and reply renders as expected', () => {
 
 describe('User interaction with post functions as expected', () => {
   test('reply toggle works', () => {
-    const props = {
+  const props = {
       content: 'This is some sample content',
-      username: 'maxblagun',
-      isCurrentUser: true,
-      current: 'maxblagun',
+      username: 'ramsesmiron',
+      isCurrentUser: false,
+      current: 'ramsesmiron',
       score: 4
     }
 
-    const { getByText } = render(<Post {...props} />)
+    const { getByText, getByPlaceholderText } = render(<Post {...props} />)
 
-    const deleteLink = getByText('Delete')
-    const editLink = getByText('Edit')
+    const replyLink = getByText('Reply')
 
-    expect(deleteLink).toBeDefined()
-    expect(editLink).toBeDefined()
+    expect(replyLink).toBeDefined()
+
+    fireEvent.click(replyLink)
+
+    const replyBox = getByPlaceholderText('Add a comment...')
+    expect(replyBox).toBeVisible
 
 
   })
